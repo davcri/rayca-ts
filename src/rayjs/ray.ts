@@ -10,24 +10,22 @@ interface IntersectionData {
 
 /**
  * [Ray-sphere intersection](https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection)
- * @param sphere
- * @returns
  */
 function intersectSphere(ray: Ray, sphere: Sphere): IntersectionData {
   const sphereCenter = new Vector3().copy(sphere.position);
-  let l = sphereCenter.sub(ray.position);
+  const l = sphereCenter.sub(ray.position);
   // angle between sphere-center-to-ray-origin and ray-direction
-  let tca = l.dot(ray.dir);
+  const tca = l.dot(ray.dir);
   if (tca < 0.0) {
     return null;
   }
 
-  let d2 = l.dot(l) - tca ** 2;
+  const d2 = l.dot(l) - tca ** 2;
   if (d2 > sphere.radius ** 2) {
     return null;
   }
 
-  let thc = Math.sqrt(sphere.radius ** 2 - d2);
+  const thc = Math.sqrt(sphere.radius ** 2 - d2);
   let t0 = tca - thc;
   let t1 = tca + thc;
 
@@ -44,8 +42,9 @@ function intersectSphere(ray: Ray, sphere: Sphere): IntersectionData {
   }
 
   const intersectionPoint = new Vector3(...ray.position).add(
-    ray.dir.multiplyScalar(t0)
+    new Vector3(...ray.dir).multiplyScalar(t0)
   );
+
   const normal = new Vector3(...sphere.position)
     .sub(intersectionPoint)
     .normalize();
