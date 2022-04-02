@@ -1,5 +1,5 @@
-import { Ray } from "../rayjs/Ray";
-import { Vector3 } from "../rayjs/Vector3";
+import { Ray } from "../rayjs/ray";
+import { Vector3 } from "../rayjs/vector3";
 
 export function process(ctx: CanvasRenderingContext2D, imgData: ImageData) {
   const [w, h] = [imgData.width, imgData.height];

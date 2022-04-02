@@ -1,5 +1,5 @@
 import { Color } from "../rayjs/material";
-import { Ray } from "../rayjs/Ray";
+import { Ray } from "../rayjs/ray";
 import { Vector3 } from "../rayjs/vector3";
 
 class Eye {
