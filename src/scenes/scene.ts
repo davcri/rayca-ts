@@ -49,7 +49,13 @@ export class Scene {
           if (intersectionData) {
             const { normal } = intersectionData;
             // new Color(normal.x, normal.y, normal.z, 255);
-            col = obj.material.fragment(normal, xx, yy, { rayDir: ray.dir });
+            const fragData = {
+              normal,
+              data: {
+                rayDir: ray.dir,
+              },
+            };
+            col = obj.material.fragment(fragData);
           }
           // apply color
           imgData.data[i * 4 + 0] = Math.round(col.r * 255); // R
