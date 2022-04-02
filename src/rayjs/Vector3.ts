@@ -76,14 +76,7 @@ class Vector3 {
     return this;
   }
 
-  add(v, w) {
-    if (w !== undefined) {
-      console.warn(
-        "THREE.Vector3: .add() now only accepts one argument. Use .addVectors( a, b ) instead."
-      );
-      return this.addVectors(v, w);
-    }
-
+  add(v) {
     this.x += v.x;
     this.y += v.y;
     this.z += v.z;
