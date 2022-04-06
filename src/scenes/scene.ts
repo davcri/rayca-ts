@@ -48,11 +48,10 @@ export class Scene {
           const intersectionData = ray.intersects(obj);
           if (intersectionData) {
             const { normal } = intersectionData;
-            // new Color(normal.x, normal.y, normal.z, 255);
             const fragData = {
               normal,
               data: {
-                rayDir: ray.dir,
+                rayDir: ray.dir, // currently unused
               },
             };
             col = obj.material.fragment(fragData);

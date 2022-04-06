@@ -37,9 +37,7 @@ export class ColorMaterial implements Material {
 
 export class NormalMaterial implements Material {
   fragment(args: FragmentArgs): Color {
-    const { normal, data } = args;
-    const { rayDir } = data;
-    const c = normal.dot(rayDir);
-    return new Color(c, c, c);
+    const { normal } = args;
+    return new Color(normal.x, normal.y, normal.z);
   }
 }

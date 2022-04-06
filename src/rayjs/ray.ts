@@ -45,9 +45,7 @@ function intersectSphere(ray: Ray, sphere: Sphere): IntersectionData {
     new Vector3(...ray.dir).multiplyScalar(t0)
   );
 
-  const normal = new Vector3(...sphere.position)
-    .sub(intersectionPoint)
-    .normalize();
+  const normal = intersectionPoint.sub(sphere.position).normalize();
 
   return {
     intersected: true,
