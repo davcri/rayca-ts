@@ -6,6 +6,12 @@
 
 ![](https://imgur.com/Bc8Noxd.png)
 
-### Other implementations
+### Other Raycaster implementations
 
 - [Fahien/rayca](https://github.com/Fahien/rayca) - 🦀 Rust implementation.
+
+
+### Interesting resources
+
+- https://en.wikipedia.org/wiki/Ray_tracing_(graphics)
+- https://github.com/OmarShehata/webgpu-compute-rasterizer
