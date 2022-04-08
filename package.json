@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davcri/js-ray.git"
+    "url": "git+https://github.com/davcri/rayca-ts.git"
   },
   "keywords": [],
   "author": "davcri",
   "license": "MIT",
-  "homepage": "https://github.com/davcri/js-ray#readme",
+  "homepage": "https://github.com/davcri/rayca-ts#readme",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.3.2",
     "parcel": "^2.3.2"
