@@ -61,10 +61,7 @@ function intersectSphere(ray: Ray, sphere: Sphere): IntersectionData {
  * [Ray-triangle intersection](https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/ray-triangle-intersection-geometric-solution)
  */
 function intersectTriangle(ray: Ray, triangle: Triangle): IntersectionData {
-  const v0 = new Vector3(...triangle.v0).add(triangle.position);
-  const v1 = new Vector3(...triangle.v1).add(triangle.position);
-  const v2 = new Vector3(...triangle.v2).add(triangle.position);
-
+  const { v0, v1, v2 } = triangle.getVertices();
   const v0v1 = new Vector3(...v1).sub(v0);
   const v0v2 = new Vector3(...v2).sub(v0);
   const normal = v0v1.cross(v0v2);
@@ -78,7 +75,7 @@ function intersectTriangle(ray: Ray, triangle: Triangle): IntersectionData {
   // compute d parameter using equation 2
   const d: number = -normal.dot(v0);
   // compute t (equation 3)
-  const t: number = -(normal.dot(triangle.position) + d) / nDotRayDir;
+  const t: number = -(normal.dot(ray.position) + d) / nDotRayDir;
   // check if the triangle is in behind the ray
   if (t < 0) {
     // console.log("the triangle is behind");

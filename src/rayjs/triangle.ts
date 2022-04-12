@@ -25,4 +25,12 @@ export class Triangle extends Object3D {
       this.v2 = vertices[2];
     }
   }
+
+  getVertices() {
+    return {
+      v0: new Vector3(...this.v0).add(this.position),
+      v1: new Vector3(...this.v1).add(this.position),
+      v2: new Vector3(...this.v2).add(this.position),
+    };
+  }
 }
