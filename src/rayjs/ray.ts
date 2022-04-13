@@ -62,8 +62,8 @@ function intersectSphere(ray: Ray, sphere: Sphere): IntersectionData {
  */
 function intersectTriangle(ray: Ray, triangle: Triangle): IntersectionData {
   const { v0, v1, v2 } = triangle.getVertices();
-  const v0v1 = new Vector3(...v1).sub(v0);
-  const v0v2 = new Vector3(...v2).sub(v0);
+  const v0v1 = new Vector3(v1.x - v0.x, v1.y - v0.y, v1.z - v0.z);
+  const v0v2 = new Vector3(v2.x - v0.x, v2.y - v0.y, v2.z - v0.z);
   const normal = v0v1.cross(v0v2);
 
   // Step 1: finding P
@@ -82,25 +82,26 @@ function intersectTriangle(ray: Ray, triangle: Triangle): IntersectionData {
     return null;
   }
   // compute the intersection point using equation 1
-  const P = new Vector3(...ray.position).add(
-    new Vector3(...ray.dir).multiplyScalar(t)
-  );
-
+  const P = new Vector3(
+    ray.position.x + ray.dir.x,
+    ray.position.y + ray.dir.y,
+    ray.position.z + ray.dir.z
+  ).multiplyScalar(t);
   // Step 2: inside-outside test
-  let edge0 = new Vector3(...v1).sub(v0);
-  let vp0 = new Vector3(...P).sub(v0);
+  const edge0 = new Vector3(v1.x - v0.x, v1.y - v0.y, v1.z - v0.z);
+  const vp0 = new Vector3(P.x - v0.x, P.y - v0.y, P.z - v0.z);
   let C: Vector3 = edge0.cross(vp0);
   if (normal.dot(C) < 0) return null; // P is on the right side
 
-  let edge1 = new Vector3(...v2).sub(v1);
-  let vp1 = new Vector3(...P).sub(v1);
+  const edge1 = new Vector3(v2.x - v1.x, v2.y - v1.y, v2.z - v1.z);
+  const vp1 = new Vector3(P.x - v1.x, P.y - v1.y, P.z - v1.z);
   C = edge1.cross(vp1);
   const u = normal.dot(C) < 0;
   if (u) return null; // P is on the right side
 
   // edge 2
-  let edge2: Vector3 = new Vector3(...v0).sub(v2);
-  let vp2 = new Vector3(...P).sub(v2);
+  const edge2: Vector3 = new Vector3(v0.x - v2.x, v0.y - v2.y, v0.z - v2.z);
+  const vp2 = new Vector3(P.x - v2.x, P.y - v2.y, P.z - v2.z);
   C = edge2.cross(vp2);
   const v = normal.dot(C);
   if (v < 0) return null; // P is on the right side;
