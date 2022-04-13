@@ -61,7 +61,7 @@ function intersectSphere(ray: Ray, sphere: Sphere): IntersectionData {
  * [Ray-triangle intersection](https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/ray-triangle-intersection-geometric-solution)
  */
 function intersectTriangle(ray: Ray, triangle: Triangle): IntersectionData {
-  const { v0, v1, v2 } = triangle.getVertices();
+  const [v0, v1, v2] = triangle.getVertices();
   const v0v1 = new Vector3(v1.x - v0.x, v1.y - v0.y, v1.z - v0.z);
   const v0v2 = new Vector3(v2.x - v0.x, v2.y - v0.y, v2.z - v0.z);
   const normal = v0v1.cross(v0v2);

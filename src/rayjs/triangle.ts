@@ -27,10 +27,10 @@ export class Triangle extends Object3D {
   }
 
   getVertices() {
-    return {
-      v0: new Vector3(...this.v0).add(this.position),
-      v1: new Vector3(...this.v1).add(this.position),
-      v2: new Vector3(...this.v2).add(this.position),
-    };
+    const v = [new Vector3(), new Vector3(), new Vector3()];
+    Vector3.add(this.v0, this.position, v[0]);
+    Vector3.add(this.v1, this.position, v[1]);
+    Vector3.add(this.v2, this.position, v[2]);
+    return v;
   }
 }
