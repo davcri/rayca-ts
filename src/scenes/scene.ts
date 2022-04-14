@@ -8,8 +8,8 @@ class Eye {
   angle: number;
 
   constructor() {
-    this.position = new Vector3();
-    this.fov = 30.0;
+    this.position = new Vector3(0, 0, 0);
+    this.fov = 40.0;
     this.angle = Math.tan(((Math.PI / 2) * this.fov) / 180.0);
   }
 }
@@ -34,11 +34,11 @@ export class Scene {
 
     let i = 0;
 
+    const ray = new Ray({ position });
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
         let xx = (2.0 * ((x + 0.5) * inv_w) - 1.0) * angle * aspectRatio;
         let yy = (1.0 - 2.0 * ((y + 0.5) * inv_h)) * angle;
-        const ray = new Ray({ position });
         ray.dir.set(xx, yy, -1.0);
         ray.dir = ray.dir.normalize();
         let col = new Color(0, 0, 0, 0);

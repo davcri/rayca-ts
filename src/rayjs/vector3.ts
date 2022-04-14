@@ -11,6 +11,12 @@ class Vector3 {
     this.z = z;
   }
 
+  static add(a: Vector3, b: Vector3, out: Vector3 = new Vector3()) {
+    out.x = a.x + b.x;
+    out.y = a.y + b.y;
+    out.z = a.z + b.z;
+  }
+
   set(x, y, z) {
     if (z === undefined) z = this.z; // sprite.scale.set(x,y)
 

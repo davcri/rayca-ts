@@ -14,8 +14,16 @@
 
 - [Fahien/rayca](https://github.com/Fahien/rayca) - 🦀 Rust implementation.
 
+## Interesting resources
 
-### Interesting resources
+### GFX
 
 - https://en.wikipedia.org/wiki/Ray_tracing_(graphics)
 - https://github.com/OmarShehata/webgpu-compute-rasterizer
+- https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics/
+
+### Optimizing JS math code
+
+- [Efficient JavaScript Vector Math Brandon Jones](http://media.tojicode.com/sfjs-vectors/)
+- Box2D web port: https://github.com/illandril/box2dweb-closure/blob/master/src/common/math/b2Vec2.js
+- [scirra.com/blog/76/how-to-write-low-garbage-real-time-javascript](http://web.archive.org/web/20140724034530/https://www.scirra.com/blog/76/how-to-write-low-garbage-real-time-javascript)
