@@ -64,9 +64,8 @@ export class IndexView {
 
   displayProfileData(profileData: ProfileData) {
     const renderTime = profileData.end - profileData.start;
-    (
-      this.parent.querySelector("span.time") as HTMLSpanElement
-    ).innerText = `${renderTime.toFixed(2)}`;
+    const span = this.parent.querySelector("span.time") as HTMLSpanElement;
+    span.innerText = `${renderTime.toFixed(2)}`;
   }
 
   resize(newSize) {
@@ -79,10 +78,11 @@ export class IndexView {
       start: null,
       end: null,
     };
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     profileData.start = performance.now();
     allScenes[sceneName](this.ctx, this.imgData);
+    this.ctx.putImageData(this.imgData, 0, 0);
     profileData.end = performance.now();
     this.displayProfileData(profileData);
-    this.ctx.putImageData(this.imgData, 0, 0);
   }
 }

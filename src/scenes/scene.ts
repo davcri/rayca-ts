@@ -19,9 +19,9 @@ export class Scene {
   backgroundColor: Color;
   eye: Eye = new Eye();
 
-  constructor({ children = [] } = {}) {
+  constructor({ children = [], backgroundColor = new Color(0, 0, 0) } = {}) {
     this.children = children;
-    this.backgroundColor = new Color(0, 0, 0, 0);
+    this.backgroundColor = backgroundColor;
   }
 
   render(imgData) {
@@ -41,7 +41,7 @@ export class Scene {
         let yy = (1.0 - 2.0 * ((y + 0.5) * inv_h)) * angle;
         ray.dir.set(xx, yy, -1.0);
         ray.dir = ray.dir.normalize();
-        let col = new Color(0, 0, 0, 0);
+        let col = this.backgroundColor;
 
         for (const obj of this.children) {
           // primary ray

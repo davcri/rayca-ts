@@ -1,4 +1,4 @@
-import { ColorMaterial, NormalMaterial } from "../rayjs/material";
+import { Color, ColorMaterial, NormalMaterial } from "../rayjs/material";
 import { Triangle } from "../rayjs/triangle";
 import { Vector3 } from "../rayjs/vector3";
 import { Scene } from "./scene";
@@ -17,6 +17,7 @@ export function process(ctx: CanvasRenderingContext2D, imgData: ImageData) {
 
   const scene = new Scene({
     children: [triangle],
+    backgroundColor: new Color(0, 0, 0, 0.1),
   });
   scene.render(imgData);
 }

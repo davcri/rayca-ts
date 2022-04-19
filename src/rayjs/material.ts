@@ -10,7 +10,7 @@ export class Color {
     this.r = r;
     this.g = g;
     this.b = b;
-    this.a = 1.0;
+    this.a = a;
   }
 }
 
