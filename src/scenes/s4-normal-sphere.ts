@@ -1,7 +1,7 @@
 import { NormalMaterial } from "../rayjs/material";
 import { Sphere } from "../rayjs/sphere";
 import { Vector3 } from "../rayjs/vector3";
-import { Scene } from "./scene";
+import { Scene } from "../rayjs/scene";
 
 export function process(ctx: CanvasRenderingContext2D, imgData: ImageData) {
   const sphere = new Sphere({
