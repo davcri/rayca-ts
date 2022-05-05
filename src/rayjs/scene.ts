@@ -1,6 +1,7 @@
-import { Color } from "../rayjs/material";
-import { Ray } from "../rayjs/ray";
-import { Vector3 } from "../rayjs/vector3";
+import { Color } from "./color";
+import { VertexMaterial } from "./material";
+import { Ray } from "./ray";
+import { Vector3 } from "./vector3";
 
 class Eye {
   position: Vector3;
@@ -47,14 +48,19 @@ export class Scene {
           // primary ray
           const intersectionData = ray.intersects(obj);
           if (intersectionData) {
-            const { normal } = intersectionData;
+            const { normal, uv, color } = intersectionData;
             const fragData = {
               normal,
+              uv,
               data: {
                 rayDir: ray.dir, // currently unused
               },
             };
-            col = obj.material.fragment(fragData);
+            if (obj.material instanceof VertexMaterial) {
+              col = color;
+            } else {
+              col = obj.material.fragment(fragData);
+            }
           }
           // apply color
           imgData.data[i * 4 + 0] = Math.round(col.r * 255); // R

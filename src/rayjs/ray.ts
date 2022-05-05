@@ -1,14 +1,15 @@
+import { Color } from "./color";
 import { Object3D } from "./object3d";
 import { Sphere } from "./sphere";
 import { Triangle } from "./triangle";
+import { Vector2 } from "./vector2";
 import { Vector3 } from "./vector3";
 
-const EPSILON = 0.000000001;
-
 interface IntersectionData {
-  intersected: boolean;
   intersectionPoint: Vector3;
   normal: Vector3;
+  uv: Vector2;
+  color: Color;
 }
 
 /**
@@ -51,9 +52,10 @@ function intersectSphere(ray: Ray, sphere: Sphere): IntersectionData {
   const normal = intersectionPoint.sub(sphere.position).normalize();
 
   return {
-    intersected: true,
     intersectionPoint,
     normal,
+    uv: new Vector2(), // TODO: implement this
+    color: new Color(0, 0, 0), // TODO: implement this
   };
 }
 
@@ -65,12 +67,12 @@ function intersectTriangle(ray: Ray, triangle: Triangle): IntersectionData {
   const v0v1 = new Vector3(v1.x - v0.x, v1.y - v0.y, v1.z - v0.z);
   const v0v2 = new Vector3(v2.x - v0.x, v2.y - v0.y, v2.z - v0.z);
   const normal = v0v1.cross(v0v2);
+  const denom = normal.dot(normal);
 
   // Step 1: finding P
-  // check if ray and plane are parallel ?
   const nDotRayDir: number = normal.dot(ray.dir);
-  if (Math.abs(nDotRayDir) < EPSILON) {
-    return null; // they are parallel so they don't intersect !
+  if (Math.abs(nDotRayDir) < Number.EPSILON) {
+    return null; // they are parallel => no intersection
   }
   // compute d parameter using equation 2
   const d: number = -normal.dot(v0);
@@ -93,11 +95,12 @@ function intersectTriangle(ray: Ray, triangle: Triangle): IntersectionData {
   let C: Vector3 = edge0.cross(vp0);
   if (normal.dot(C) < 0) return null; // P is on the right side
 
+  // edge 1
   const edge1 = new Vector3(v2.x - v1.x, v2.y - v1.y, v2.z - v1.z);
   const vp1 = new Vector3(P.x - v1.x, P.y - v1.y, P.z - v1.z);
   C = edge1.cross(vp1);
-  const u = normal.dot(C) < 0;
-  if (u) return null; // P is on the right side
+  const u = normal.dot(C);
+  if (u < 0) return null; // P is on the right side
 
   // edge 2
   const edge2: Vector3 = new Vector3(v0.x - v2.x, v0.y - v2.y, v0.z - v2.z);
@@ -106,11 +109,23 @@ function intersectTriangle(ray: Ray, triangle: Triangle): IntersectionData {
   const v = normal.dot(C);
   if (v < 0) return null; // P is on the right side;
 
-  // return true; // this ray hits the triangle
+  const uv = new Vector2(u / denom, v / denom);
+
+  // interpolated colors
+  const c0 = triangle.v0.color.toLinear();
+  const c1 = triangle.v1.color.toLinear();
+  const c2 = triangle.v2.color.toLinear();
+  let colorHex = 0;
+  colorHex += Color.getHex(Color.multiply(c0, uv.x));
+  colorHex += Color.getHex(Color.multiply(c1, uv.y));
+  colorHex += (1.0 - uv.x - uv.y) * Color.getHex(c2);
+  const color = new Color().setHex(colorHex).toRGB();
+
   return {
-    intersected: true,
     intersectionPoint: P,
     normal,
+    uv,
+    color,
   };
 }
 

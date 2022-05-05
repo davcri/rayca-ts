@@ -1,22 +1,11 @@
+import { Color } from "./color";
+import { Vector2 } from "./vector2";
 import { Vector3 } from "./vector3";
-
-export class Color {
-  r: number;
-  g: number;
-  b: number;
-  a = 1.0;
-
-  constructor(r, g, b, a = 1.0) {
-    this.r = r;
-    this.g = g;
-    this.b = b;
-    this.a = a;
-  }
-}
 
 interface FragmentArgs {
   normal: Vector3;
   data: any; // uniforms-like data
+  uv: Vector2;
 }
 
 export interface Material {
@@ -39,5 +28,18 @@ export class NormalMaterial implements Material {
   fragment(args: FragmentArgs): Color {
     const { normal } = args;
     return new Color(normal.x, normal.y, normal.z);
+  }
+}
+
+export class VertexMaterial implements Material {
+  fragment(args: FragmentArgs): Color {
+    return new Color(0, 0, 0);
+  }
+}
+
+export class UVMaterial implements Material {
+  fragment(args: FragmentArgs): Color {
+    const { uv } = args;
+    return new Color(uv.x, uv.y, 0);
   }
 }
