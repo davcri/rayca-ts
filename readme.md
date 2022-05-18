@@ -16,6 +16,8 @@
 
 ## Interesting resources
 
+- BVH: [How to build a BVH](https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics/)
+
 ### GFX
 
 - https://en.wikipedia.org/wiki/Ray_tracing_(graphics)
