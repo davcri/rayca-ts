@@ -9,9 +9,9 @@ export default function (ctx: CanvasRenderingContext2D, imgData: ImageData) {
   const triangle = new Triangle({
     position: new Vector3(0, 0, -0.3),
     vertices: [
-      new Vertex(-0.2, -0.2, -0.6, new Color(0.5, 0, 0)),
-      new Vertex(0.2, -0.2, -0.6, new Color(0, 0.5, 0)),
-      new Vertex(0.0, 0.2, -0.6, new Color(0, 0, 0.5)),
+      new Vertex(-0.2, -0.2, -0.6, new Color(1, 0, 0)),
+      new Vertex(0.2, -0.2, -0.6, new Color(0, 1, 0)),
+      new Vertex(0.0, 0.2, -0.6, new Color(0, 0, 1)),
     ],
   });
   triangle.material = new VertexMaterial();
