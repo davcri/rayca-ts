@@ -112,14 +112,14 @@ function intersectTriangle(ray: Ray, triangle: Triangle): IntersectionData {
   const uv = new Vector2(u / denom, v / denom);
 
   // interpolated colors
-  const c0 = triangle.v0.color.toLinear();
-  const c1 = triangle.v1.color.toLinear();
-  const c2 = triangle.v2.color.toLinear();
+  const c0 = triangle.v0.color;
+  const c1 = triangle.v1.color;
+  const c2 = triangle.v2.color;
   let colorHex = 0;
   colorHex += Color.getHex(Color.multiply(c0, uv.x));
   colorHex += Color.getHex(Color.multiply(c1, uv.y));
   colorHex += (1.0 - uv.x - uv.y) * Color.getHex(c2);
-  const color = new Color().setHex(colorHex).toRGB();
+  const color = new Color().setHex(colorHex);
 
   return {
     intersectionPoint: P,
