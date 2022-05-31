@@ -25,6 +25,14 @@ export class Scene {
     this.backgroundColor = backgroundColor;
   }
 
+  onMount() {
+    // override
+  }
+
+  onUnmount() {
+    // override
+  }
+
   render(imgData) {
     const [w, h] = [imgData.width, imgData.height];
     const inv_w = 1.0 / w;

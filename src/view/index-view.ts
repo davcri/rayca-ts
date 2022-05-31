@@ -1,3 +1,4 @@
+import { Scene } from "../rayjs/scene";
 import { allScenes } from "../scenes/all-scenes";
 
 interface ProfileData {
@@ -7,7 +8,7 @@ interface ProfileData {
 
 export class IndexView {
   appState = {
-    selectedScene: null,
+    selectedSceneName: null,
   };
   parent: HTMLElement;
   canvas: HTMLCanvasElement;
@@ -17,7 +18,7 @@ export class IndexView {
   constructor(parent: HTMLElement) {
     this.parent = parent;
     // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas
-    this.canvas = document.createElement("canvas");
+    this.canvas = document.querySelector("canvas");
     this.resize({ w: 256, h: 256 });
     this.ctx = this.canvas.getContext("2d");
     this.imgData = this.ctx.createImageData(
@@ -30,18 +31,21 @@ export class IndexView {
     let firstButton = null;
     for (const scene in allScenes) {
       const btn = document.createElement("button");
-      // option.value = scene;
       btn.innerText = scene;
-      if (!this.appState.selectedScene) {
-        this.appState.selectedScene = btn.innerText;
+      if (!this.appState.selectedSceneName) {
+        this.appState.selectedSceneName = btn.innerText;
       }
       btn.addEventListener("click", () => {
         for (let el of buttonsDiv.children) {
           el.classList.remove("selected");
         }
-        this.appState.selectedScene = btn.innerText;
+        const currentScene = allScenes[this.appState.selectedSceneName];
+        if (currentScene instanceof Scene) {
+          currentScene.onUnmount();
+        }
+        this.appState.selectedSceneName = btn.innerText;
         btn.classList.add("selected");
-        this.selectScene(this.appState.selectedScene);
+        this.setupScene(this.appState.selectedSceneName);
       });
       if (!firstButton) {
         firstButton = btn;
@@ -49,9 +53,8 @@ export class IndexView {
       buttonsDiv.appendChild(btn);
     }
 
-    this.parent.appendChild(this.canvas);
-    this.parent.appendChild(this.createProfileDiv(0));
-    this.parent.appendChild(buttonsDiv);
+    parent.appendChild(this.createProfileDiv(0));
+    parent.appendChild(buttonsDiv);
     firstButton.click();
   }
 
@@ -73,15 +76,21 @@ export class IndexView {
     this.canvas.height = newSize.h;
   }
 
-  selectScene(sceneName) {
+  setupScene(sceneName) {
+    const scene = allScenes[sceneName];
     const profileData = {
       start: null,
       end: null,
     };
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     profileData.start = performance.now();
-    allScenes[sceneName](this.ctx, this.imgData);
-    this.ctx.putImageData(this.imgData, 0, 0);
+    if (scene instanceof Function) {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      scene(this.ctx, this.imgData);
+      this.ctx.putImageData(this.imgData, 0, 0);
+    } else if (scene instanceof Scene) {
+      scene.onMount();
+      scene.process(this.ctx, this.imgData);
+    }
     profileData.end = performance.now();
     this.displayProfileData(profileData);
   }
