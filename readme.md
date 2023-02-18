@@ -23,6 +23,7 @@
 - https://en.wikipedia.org/wiki/Ray_tracing_(graphics)
 - https://github.com/OmarShehata/webgpu-compute-rasterizer
 - https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics/
+- https://kristoffer-dyrkorn.github.io/triangle-rasterizer/
 
 ### Optimizing JS math code
 
